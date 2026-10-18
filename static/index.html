@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1320"><meta name="description" content="Local proof of concept for Indian equity investment research">
+<title>Northstar · Investment Research POC</title>
+<link rel="stylesheet" href="/style.css">
+</head><body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brandmark">✦</div><div><strong>northstar</strong><span>INVESTMENT INTELLIGENCE</span></div></div>
+    <div class="sidebar-section"><div class="side-label">WORKSPACE</div>
+      <a class="nav-link active" href="#overview"><span class="nav-symbol">◫</span> Research overview</a>
+      <a class="nav-link" href="#sources"><span class="nav-symbol">◈</span> Evidence & sources</a>
+      <a class="nav-link" href="#analyst"><span class="nav-symbol">✧</span> AI investment analyst</a>
+    </div>
+    <div class="sidebar-section"><div class="side-label">WATCHLIST · POC</div><div id="watchlist" class="watchlist"></div></div>
+    <div class="sidebar-bottom"><div class="live-indicator"><span></span> Local research workspace</div>
+    <p>Not a broker. No bank connections. No orders. Financial inputs remain on this device until you explicitly request AI analysis.</p></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="breadcrumbs">Investment research <span>/</span> <strong id="crumb">Overview</strong></div>
+      <div class="top-actions"><span class="mini-tag">PRIVATE POC · v0.1</span><span class="avatar">NS</span></div>
+    </header>
+    <main id="overview">
+      <div class="headline-row"><div><p class="eyebrow">YOUR PERSONAL INVESTMENT RESEARCH DESK</p>
+        <h1>See beyond the price.</h1><p class="lead">A research-first workspace for Indian equities, backed by evidence—not predictions.</p></div>
+        <div class="horizon">INVESTMENT HORIZON<strong>3–5 years</strong></div>
+      </div>
+      <div class="toolbar"><div class="search-area"><label for="ticker">RESEARCH COMPANY</label>
+      <select id="ticker"><option value="DEMO">★ Fictional demo · no API key</option>
+        <option value="INFY">INFY — Infosys</option><option value="TCS">TCS — Tata Consultancy Services</option>
+        <option value="ICICIBANK">ICICIBANK — ICICI Bank</option><option value="HDFCBANK">HDFCBANK — HDFC Bank</option>
+        <option value="RELIANCE">RELIANCE — Reliance Industries</option><option value="SBIN">SBIN — State Bank of India</option>
+        <option value="M&M">M&M — Mahindra & Mahindra</option><option value="NTPC">NTPC — NTPC</option>
+      </select></div><button id="refresh" class="btn primary">↻ Refresh research</button></div>
+      <div id="demoBanner" class="notice">SIMULATED DEMO — All figures and headlines on this screen are fictional. Select an actual stock and configure free API keys to retrieve real data.</div>
+      <div class="stats-grid">
+        <div class="stat-card"><span>LATEST OBSERVED CLOSE</span><strong id="lastPrice">—</strong><small id="priceDate">No market data loaded</small></div>
+        <div class="stat-card"><span>PERIOD PRICE CHANGE</span><strong id="priceChange">—</strong><small>Price-only return, excludes dividends</small></div>
+        <div class="stat-card"><span>RESEARCH COVERAGE</span><strong id="researchScore">0 / 100</strong><small>Input completeness, NOT a stock rating</small></div>
+        <div class="stat-card"><span>INVESTMENT ASSESSMENT</span><strong id="assessment" class="assessment">Pending evidence</strong><small id="assessmentSub">Not an automated buy/sell signal</small></div>
+      </div>
+      <div class="main-grid">
+        <section class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">MARKET CONTEXT</p><h2 id="chartCompany">Price history</h2></div><span class="soft-tag" id="marketBadge">EOD · no feed</span></div>
+          <div class="chart-holder"><svg id="priceChart" viewBox="0 0 700 250" preserveAspectRatio="none" role="img" aria-label="Daily closing price trend chart">
+          <path id="gridPath" fill="none" stroke="#27364a" stroke-width="1" opacity="0.8"></path><path id="fillPath" fill="url(#area)" opacity=".7"></path>
+          <path id="linePath" stroke="#52d6b3" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"></path>
+          <defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#45cbaa" stop-opacity=".25"/><stop offset="100%" stop-color="#45cbaa" stop-opacity="0"/></linearGradient></defs>
+          </svg><div id="chartFallback" class="chart-fallback">Waiting for price history</div></div>
+          <div class="chart-bottom"><span id="fromDate">—</span><span id="sourceLabel">Source not connected</span><span id="toDate">—</span></div>
+        </section>
+        <section class="panel readiness"><div class="panel-heading"><div><p class="eyebrow">RESEARCH HYGIENE</p><h2>Evidence coverage</h2></div></div>
+          <div class="readiness-dial"><div class="ring" id="ring"><div><strong id="bigScore">0%</strong><span>Complete</span></div></div>
+          <div class="readiness-detail"><strong id="verdict">Missing evidence</strong><p>An audit of what the app knows and what it still needs. Never a prediction of returns.</p></div></div>
+          <div class="coverage-items" id="coverageItems"></div>
+        </section>
+      </div>
+      <div id="sources" class="main-grid secondary-grid">
+        <section class="panel news-panel"><div class="panel-heading"><div><p class="eyebrow">EVENT INTELLIGENCE</p><h2>Company news</h2></div><span class="soft-tag" id="newsBadge">No feed</span></div>
+          <div class="news-list" id="newsList"></div><p class="footnote">Headlines are leads for research, not verified evidence of underlying claims. Open the original sources.</p>
+        </section>
+        <section class="panel financial-panel"><div class="panel-heading"><div><p class="eyebrow">VERIFIED BUSINESS DATA</p><h2>Financial input lab</h2></div><button class="btn outline small" id="saveFinancials">Save inputs</button></div>
+          <p class="section-explain">Copy facts from a dated annual report or exchange filing. Do not enter guessed numbers. Fields stay in this browser's local storage.</p>
+          <div class="form-grid">
+            <label>Revenue growth YoY (%)<input type="number" step="0.1" id="revenueGrowth" placeholder="e.g. 8.5"></label>
+            <label>EPS growth YoY (%)<input type="number" step="0.1" id="epsGrowth" placeholder="e.g. 10.2"></label>
+            <label>Return on equity (%)<input type="number" step="0.1" id="roe" placeholder="e.g. 18.0"></label>
+            <label>Debt / equity (×)<input type="number" step="0.01" id="debtEquity" placeholder="e.g. 0.25"></label>
+            <label>Trailing P/E (×)<input type="number" step="0.1" id="pe" placeholder="e.g. 20.0"></label>
+            <label>Free cash flow<select id="fcfPositive"><option value="">Unknown</option><option value="true">Positive</option><option value="false">Negative</option></select></label>
+            <label>Historical years reviewed<input type="number" min="0" max="20" id="historicalYears" placeholder="e.g. 3"></label>
+            <label>Report period<input id="reportPeriod" placeholder="e.g. Q2 FY27"></label>
+          </div>
+          <label class="full-field">Official source URL #1<input type="url" id="source1" placeholder="https://company.com/investors/report.pdf"></label>
+          <label class="full-field">Official source URL #2<input type="url" id="source2" placeholder="https://nseindia.com/..."></label>
+          <label class="full-field">Management guidance and research notes<textarea id="managementNotes" rows="3" maxlength="1800" placeholder="Quote key management commentary, catalysts and risks; include publication date..."></textarea></label>
+          <div class="form-bottom"><span id="savedStatus">Not saved</span><button class="btn subtle" id="clearFinancials">Clear company inputs</button></div>
+        </section>
+      </div>
+      <section class="panel risk-panel"><div class="panel-heading"><div><p class="eyebrow">DETERMINISTIC CHECKS</p><h2>Factors to investigate</h2></div><span class="soft-tag">Transparent rules</span></div><div id="flags" class="flags"></div></section>
+      <section id="analyst" class="panel analyst-panel"><div class="panel-heading"><div><p class="eyebrow">INVESTMENT INTELLIGENCE</p><h2>AI research analyst</h2></div><span class="soft-tag">Optional · Gemini free tier</span></div>
+        <div class="ai-intro"><div class="ai-icon">✧</div><div><strong>Generate a skeptical 3–5 year investment thesis.</strong><p>Uses your verified financial inputs, observed EOD prices, and dated news headlines. Refuses a buy/sell judgment when evidence is missing.</p></div></div>
+        <div class="analyst-actions"><button class="btn primary" id="generateAI">✧ Generate research thesis</button><span>Free-tier provider may use submitted prompts to improve models. Never send private account data.</span></div>
+        <div id="aiOutput" class="ai-output"><p class="placeholder">Your evidence-based analysis will appear here when enough verified inputs and an API key are available.</p></div>
+      </section>
+      <footer>Northstar POC • educational investment research only • No live trade execution • No guarantees of accuracy • Market and news timestamps shown when available</footer>
+    </main>
+  </div>
+</div>
+<script src="/app.js" defer></script>
+</body></html>
